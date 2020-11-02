@@ -41,6 +41,9 @@ router.get('/', withAuth, (req, res) => {
 
 router.get('/edit/:id', withAuth, (req, res) => {
     Post.findOne({
+        where: {
+            id: req.params.id
+        },
         attributes: ['id', 'title', 'text', 'created_at'],
         include: [
             {
@@ -51,10 +54,7 @@ router.get('/edit/:id', withAuth, (req, res) => {
                 model: User,
                 attributes: ['username']
             }
-        ],
-        where: {
-            id: req.params.id
-        }
+        ]
     })
         .then(dbPostData => {
             const post = dbPostData.get({ plain: true });

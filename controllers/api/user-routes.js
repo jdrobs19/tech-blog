@@ -52,8 +52,6 @@ router.post('/', (req, res) => {
     User.create({
         username: req.body.username,
         password: req.body.password,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
         email: req.body.email
     })
         .then(dbUserData => {
@@ -73,12 +71,12 @@ router.post('/', (req, res) => {
 router.post('/login', (req, res) => {
     User.findOne({
         where: {
-            username: req.body.username
+            email: req.body.email
         }
     })
         .then(dbUserData => {
             if (!dbUserData) {
-                res.status(400).json({ message: 'No user with that username found' });
+                res.status(400).json({ message: 'No user with that email found' });
                 return;
             }
 
